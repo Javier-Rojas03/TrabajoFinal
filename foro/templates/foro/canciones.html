@@ -1,12 +1,13 @@
 {% extends "foro/lobby.html" %}
 
 {% block title %}
-<title>peliculas</title>
+<title>canciones</title>
 {% endblock title %}
 
 {% block header_h1 %}
-    <h1 class="fw-bolder">Blogs peliculas</h1>
+    <h1 class="fw-bolder">Blogs canciones</h1>
 {% endblock header_h1 %}
+
 
 {% block blog_entries %}
                 
@@ -15,25 +16,26 @@
                     {% block blogs %}
                     <div class="row">
                         <div class="col-lg-10">
-                            {% if listado_de_peliculas %}
-                            {% for pelicula in listado_de_peliculas %}
+                            {% if listado_de_canciones %}
+                            {% for cancion in listado_de_canciones %}
                             
                             <div class="card mb-4">
                                 <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
                                 <div class="card-body">
                                     <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">{{pelicula.titulo}}</h2>
-                                    <p class="card-text">{{pelicula.subtitulo}}</p>
+                                    <h2 class="card-title h4">{{cancion.titulo}}</h2>
+                                    <p class="card-text">{{cancion.subtitulo}}</p>
                                     <a class="btn btn-primary" href="#!">Read more →</a>
                                 </div>
                             </div>
                             {% endfor %}
                             {% else %}
-                                <p>No se encontraron blogs de peliculas...</p>
+                                <p>No se encontraron blogs de canciones...</p>
                             {% endif %}
                         </div>
                         
                     </div>
+                    
                 </div>
                     {% endblock blogs %}
 {% endblock blog_entries %}

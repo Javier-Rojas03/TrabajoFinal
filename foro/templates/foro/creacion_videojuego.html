@@ -1,0 +1,18 @@
+{% extends "foro/menu_creacion.html" %}
+
+{% block text_center %}
+    <h1 class="fw-bolder">Creacion blog videojuego</h1>
+{% endblock text_center %}
+
+{% block main_menu %}
+            
+<div class="text-center my-5">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{formulario}}
+        <input type="submit" value="Crear">
+    </form>
+</div>
+
+
+{% endblock main_menu %}

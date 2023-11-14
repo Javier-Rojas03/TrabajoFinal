@@ -6,17 +6,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        {% block title %}
         <title>Blog Home</title>
+        {% endblock title %}
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href={% static "css/styles.css" %}" rel="stylesheet" />
+        <link href={% static "css/styles.css" %} rel="stylesheet" />
     </head>
     <body>
         <!-- Responsive navbar-->
+        {% block nav_bar %}
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Inicio</a>
+                <a class="navbar-brand" href={% url "inicio" %}>Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -28,12 +31,17 @@
                 </div>
             </div>
         </nav>
+        {% endblock nav_bar %}
         <!-- Page header with logo and tagline-->
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
+                    {% block header_h1 %}
                     <h1 class="fw-bolder">Bienvenido a la pagina de blogs</h1>
+                    {% endblock header_h1 %}
+                    {% block header_p %}
                     <p class="lead mb-0">Ingrese para poder continuar</p>
+                    {% endblock header_p %}
                 </div>
             </div>
         </header>
@@ -41,8 +49,10 @@
         <div class="container">
             <div class="row">
                 <!-- Blog entries-->
+                {% block blog_entries %}
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
+                    {% block Featured_blog %}
                     <div class="card mb-4">
                         <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                         <div class="card-body">
@@ -52,7 +62,9 @@
                             <a class="btn btn-primary" href="#!">Read more →</a>
                         </div>
                     </div>
+                    {% endblock Featured_blog %}
                     <!-- Nested row for non-featured blog posts-->
+                    {% block blogs %}
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- Blog post-->
@@ -99,6 +111,8 @@
                             </div>
                         </div>
                     </div>
+                    {% endblock blogs %}
+
                     <!-- Pagination-->
                     <nav aria-label="Pagination">
                         <hr class="my-0" />
@@ -113,18 +127,23 @@
                         </ul>
                     </nav>
                 </div>
+                {% endblock blog_entries %}
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
+                    {% block search %}
                     <div class="card mb-4">
                         <div class="card-header">Search</div>
                         <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
+                            <form action="">
+                                <div class="input-group">
+                                    <input name="nombre" class="form-control" type="text" placeholder="Enter name to search..." aria-label="Enter name to search..." aria-describedby="button-search" />
+                                    <button class="btn btn-primary" id="button-search" >Go!</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                    {% endblock search %}
                     <!-- Categories widget-->
                     <div class="card mb-4">
                         <div class="card-header">Categories</div>
