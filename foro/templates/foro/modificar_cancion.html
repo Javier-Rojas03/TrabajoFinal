@@ -1,0 +1,22 @@
+{% extends "foro/menu_creacion.html" %}
+
+{% block title %}
+    Modificacion
+{% endblock title %}
+
+{% block text_center %}
+    <h1 class="fw-bolder">Modificacion blog cancion</h1>
+{% endblock text_center %}
+
+{% block main_menu %}
+            
+<div class="text-center my-5">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{formulario}}
+        <input type="submit" value="Modificar">
+    </form>
+</div>
+
+
+{% endblock main_menu %}

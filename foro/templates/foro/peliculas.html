@@ -25,7 +25,10 @@
                                     <h2 class="card-title h4">{{pelicula.titulo}}</h2>
                                     <p class="card-text">{{pelicula.subtitulo}}</p>
                                     <a class="btn btn-primary" href="#!">Read more →</a>
+                                    <a class="btn btn-primary" href={% url "modificar_blog_pelicula" pelicula.id %}>Modificar</a>
                                 </div>
+                                <!-- aca falta un if si es admin -->
+                                <a class="btn btn-primary" href={% url "eliminar_blog_pelicula" pelicula.id %}>eliminar</a>
                             </div>
                             {% endfor %}
                             {% else %}

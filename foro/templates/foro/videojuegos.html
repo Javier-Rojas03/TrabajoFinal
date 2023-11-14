@@ -25,7 +25,10 @@
                                     <h2 class="card-title h4">{{videojuego.titulo}}</h2>
                                     <p class="card-text">{{videojuego.subtitulo}}</p>
                                     <a class="btn btn-primary" href="#!">Read more →</a>
+                                    <a class="btn btn-primary" href={% url "modificar_blog_videojuego" videojuego.id %}>Modificar</a>
                                 </div>
+                                <!-- aca falta un if si es admin -->
+                                 <a class="btn btn-primary" href={% url "eliminar_blog_videojuego" videojuego.id %}>eliminar</a>
                             </div>
                             {% endfor %}
                             {% else %}
