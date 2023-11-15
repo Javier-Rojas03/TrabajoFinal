@@ -7,6 +7,7 @@ class BaseVideojuegoFormulario(forms.Form):
     subtitulo = forms.CharField(max_length=100)
     opinion = forms.CharField(max_length=250)
     puntaje = forms.DecimalField(max_digits=3,decimal_places=1)
+    fecha = forms.DateField()
 
 class BaseCancionFormulario(forms.Form):
     nombre = forms.CharField(max_length=30)
@@ -15,6 +16,7 @@ class BaseCancionFormulario(forms.Form):
     subtitulo = forms.CharField(max_length=100)
     opinion = forms.CharField(max_length=250)
     puntaje = forms.DecimalField(max_digits=3,decimal_places=1)
+    fecha = forms.DateField()
 
 class CrearVideojuego(BaseVideojuegoFormulario):
     ...

@@ -10,7 +10,8 @@ class Pelicula(models.Model):
    subtitulo = models.CharField(max_length=100)
    opinion = models.TextField()
    puntaje = models.DecimalField(max_digits=3,decimal_places=1)
-   #agregar imagen y fecha, contemplar idea de autor
+   fecha = models.DateField()
+   #agregar imagen, contemplar idea de autor
    def __str__(self):
        return f'{self.id} - {self.nombre} - {self.puntaje}'
 
@@ -21,7 +22,8 @@ class Videojuego(models.Model):
     subtitulo = models.CharField(max_length=100)
     opinion = models.TextField()
     puntaje = models.DecimalField(max_digits=3,decimal_places=1)
-    #agregar imagen y fecha, contemplar idea de autor
+    fecha = models.DateField()
+    #agregar imagen, contemplar idea de autor
     def __str__(self):
        return f'{self.id} - {self.nombre} - {self.puntaje}'
     
@@ -32,6 +34,7 @@ class Cancion(models.Model):
     subtitulo = models.CharField(max_length=100)
     opinion = models.TextField()
     puntaje = models.DecimalField(max_digits=3,decimal_places=1)
-    #agregar imagen y fecha, contemplar idea de autor
+    fecha = models.DateField()
+    #agregar imagen, contemplar idea de autor
     def __str__(self):
        return f'{self.id} - {self.nombre} - {self.puntaje}'

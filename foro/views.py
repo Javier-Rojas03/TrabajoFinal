@@ -56,7 +56,8 @@ def creacion_pelicula(request):
                             titulo=request.POST.get('titulo'),
                             subtitulo=request.POST.get('subtitulo'),
                             opinion=request.POST.get('opinion'),
-                            puntaje=request.POST.get('puntaje'))
+                            puntaje=request.POST.get('puntaje'),
+                            fecha=request.POST.get('fecha'))
         pelicula.save()
         
         return redirect('menu_creacion')
@@ -76,7 +77,8 @@ def creacion_videojuego(request):
                             titulo=info_limpia.get('titulo'),
                             subtitulo=info_limpia.get('subtitulo'),
                             opinion=info_limpia.get('opinion'),
-                            puntaje=info_limpia.get('puntaje'))
+                            puntaje=info_limpia.get('puntaje'),
+                            fecha=info_limpia.get('fecha'))
             videojuego.save()
             
             return redirect('menu_creacion')
@@ -99,7 +101,8 @@ def creacion_cancion(request):
                             titulo=info_limpia.get('titulo'),
                             subtitulo=info_limpia.get('subtitulo'),
                             opinion=info_limpia.get('opinion'),
-                            puntaje=info_limpia.get('puntaje'))
+                            puntaje=info_limpia.get('puntaje'),
+                            fecha=info_limpia.get('fecha'))
             cancion.save()
             
             return redirect('menu_creacion')
@@ -186,3 +189,18 @@ def modificar_blog_cancion(request, cancion_id):
     
     formulario = ModificarCancion(initial={'nombre': cancion_a_actualizar.nombre,'artista': cancion_a_actualizar.artista,'titulo': cancion_a_actualizar.titulo,'subtitulo': cancion_a_actualizar.subtitulo,'opinion': cancion_a_actualizar.opinion,'puntaje': cancion_a_actualizar.puntaje})
     return render(request, "foro/modificar_cancion.html", {"formulario": formulario})
+
+def detalle_pelicula(request, pelicula_id):
+    pelicula = Pelicula.objects.get(id = pelicula_id)
+    
+    return render(request, "foro/detalle_pelicula.html", {"pelicula": pelicula})
+    
+def detalle_videojuego(request, videojuego_id):
+    videojuego = Videojuego.objects.get(id = videojuego_id)
+    
+    return render(request, "foro/detalle_videojuego.html", {"videojuego": videojuego})
+    
+def detalle_cancion(request, cancion_id):
+    cancion = Cancion.objects.get(id = cancion_id)
+    
+    return render(request, "foro/detalle_cancion.html", {"cancion": cancion})

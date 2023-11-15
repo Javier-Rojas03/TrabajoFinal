@@ -21,10 +21,10 @@
                             <div class="card mb-4">
                                 <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
                                 <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
+                                    <div class="small text-muted">{{pelicula.fecha}}</div>
                                     <h2 class="card-title h4">{{pelicula.titulo}}</h2>
                                     <p class="card-text">{{pelicula.subtitulo}}</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                    <a class="btn btn-primary" href={% url "detalle_pelicula" pelicula.id %}>Read more →</a>
                                     <a class="btn btn-primary" href={% url "modificar_blog_pelicula" pelicula.id %}>Modificar</a>
                                 </div>
                                 <!-- aca falta un if si es admin -->
