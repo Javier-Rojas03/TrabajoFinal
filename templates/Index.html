@@ -25,7 +25,6 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
                     </ul>
                 </div>
@@ -36,15 +35,18 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
+                    {% block text_center %}
                     {% block header_h1 %}
                     <h1 class="fw-bolder">Bienvenido a la pagina de blogs</h1>
                     {% endblock header_h1 %}
                     {% block header_p %}
                     <p class="lead mb-0">Ingrese para poder continuar</p>
                     {% endblock header_p %}
+                    {% endblock text_center %}
                 </div>
             </div>
         </header>
+        {% block main_menu %}{% endblock main_menu %}
         <!-- Page content-->
         <div class="container">
             <div class="row">
@@ -128,7 +130,6 @@
                     </nav>
                 </div>
                 {% endblock blog_entries %}
-                {% block widgets %}
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
@@ -146,6 +147,7 @@
                     </div>
                     {% endblock search %}
                     <!-- Categories widget-->
+                    {% block widgets %}
                     <div class="card mb-4">
                         <div class="card-header">Categories</div>
                         <div class="card-body">
@@ -172,8 +174,8 @@
                         <div class="card-header">Side Widget</div>
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                     </div>
+                    {% endblock widgets %}
                 </div>
-                {% endblock widgets %}
             </div>
         </div>
         <!-- Footer-->

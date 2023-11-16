@@ -19,7 +19,7 @@
                             {% for videojuego in listado_de_videojuegos %}
                             
                             <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <a href="#!"><img class="card-img-top" src={{videojuego.imagen.url}} alt="..." /></a>
                                 <div class="card-body">
                                     <div class="small text-muted">{{videojuego.fecha}}</div>
                                     <h2 class="card-title h4">{{videojuego.titulo}}</h2>
@@ -41,3 +41,17 @@
                 </div>
                     {% endblock blogs %}
 {% endblock blog_entries %}
+
+{% block search %}
+<div class="card mb-4">
+    <div class="card-header">Search</div>
+    <div class="card-body">
+        <form action="">
+            <div class="input-group">
+                <input name="nombre" class="form-control" type="text" placeholder="Enter name to search..." aria-label="Enter name to search..." aria-describedby="button-search" />
+                <button class="btn btn-primary" id="button-search" >Go!</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock search %}

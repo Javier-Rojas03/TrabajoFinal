@@ -1,9 +1,12 @@
 from django.urls import path
-from foro.views import lobby, peliculas, videojuegos, canciones, menu_creacion,creacion_pelicula, creacion_videojuego, creacion_cancion, eliminar_blog_pelicula, eliminar_blog_videojuego, eliminar_blog_cancion, modificar_blog_cancion, modificar_blog_pelicula, modificar_blog_videojuego, detalle_cancion, detalle_pelicula, detalle_videojuego
+from foro.views import lobby, peliculas, videojuegos, canciones, menu_creacion,creacion_pelicula, creacion_videojuego, creacion_cancion, eliminar_blog_pelicula, eliminar_blog_videojuego, eliminar_blog_cancion, modificar_blog_cancion, modificar_blog_pelicula, modificar_blog_videojuego, detalle_cancion, detalle_pelicula, detalle_videojuego, about_me
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
     path('lobby/',  lobby, name='lobby'),
+    path('aboutme/',about_me,name='about_me'),
     path('peliculas/',  peliculas, name='peliculas'),
     path('videojuegos/',  videojuegos, name='videojuegos'),
     path('canciones/',  canciones, name='canciones'),
@@ -20,4 +23,4 @@ urlpatterns = [
     path('peliculas/<int:pelicula_id>/',  detalle_pelicula, name='detalle_pelicula'),
     path('videojuegos/<int:videojuego_id>/',  detalle_videojuego, name='detalle_videojuego'),
     path('canciones/<int:cancion_id>/',  detalle_cancion, name='detalle_cancion'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

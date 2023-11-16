@@ -9,12 +9,12 @@
 
 {% block blog_entries %}
     <div class="card mb-8">
-        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+        <a href="#!"><img class="card-img-top" src={{pelicula.imagen.url}} alt="..." /></a>
         <div class="card-body">
             <div class="small text-muted">{{pelicula.fecha}}</div>
             <h3 class="card-title">{{pelicula.nombre}}</h3>
             <h5 class="card-subtitle">Director - {{pelicula.director}} | Puntaje - {{pelicula.puntaje}}</h5>
-            <p class="card-text">{{pelicula.opinion}}</p>
+            <p class="card-text">{{pelicula.opinion | safe}}</p>
         </div>
     </div>
 {% endblock blog_entries %}

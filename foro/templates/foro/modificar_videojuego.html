@@ -11,8 +11,9 @@
 {% block main_menu %}
             
 <div class="text-center my-5">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
+        {{formulario.media}}
         {{formulario}}
         <input type="submit" value="Modificar">
     </form>

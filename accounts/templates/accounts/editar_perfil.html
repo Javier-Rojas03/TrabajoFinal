@@ -10,7 +10,7 @@
 
 {% block header_p %}
 {% if request.user.datosextra.avatar %}
-<img src={{request.user.datosextra.avatar.url}} alt="avatar" >   
+<img src={{request.user.datosextra.avatar.url}} alt="avatar" height='138px' >   
 {% endif %}
 <p class="lead mb-0">edicion de perfil</p>
     <form class="text-center my-5" action={% url "editar_perfil" %} method="POST" enctype='multipart/form-data'>

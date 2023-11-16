@@ -11,9 +11,27 @@
 {% block header_p %}
     <p class="lead mb-0">
         {% if request.user.datosextra.avatar %}
-            <img src={{request.user.datosextra.avatar.url}} alt="avatar" >   
+            <img src={{request.user.datosextra.avatar.url}} alt="avatar" height='138px' >  
         {% endif %}
     </p>
+        {% if request.user.email %}
+            <p>Mail: {{request.user.email}} </p>     
+        {% endif %}
+    
+        <p>    
+            {% if request.user.first_name %}
+                <a>Nombre: {{request.user.first_name}} </a>     
+            {% endif %}
+            -
+            {% if request.user.last_name %}
+                <a>Apellido: {{request.user.last_name}} </a>
+            {% endif %}
+        </p>
+        {% if request.user.datosextra.informacion %}
+            <p>Sobre mi:</p>
+            <p>{{request.user.datosextra.informacion}}</p>
+        {% endif %}
+        
     
     <a class="nav-item" href={% url "editar_perfil" %}>Editar perfil</a>
 

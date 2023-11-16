@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from foro.models import Pelicula, Videojuego, Cancion
-from foro.forms import CrearVideojuego, CrearCancion, ModificarCancion, ModificarVideojuego
+from foro.forms import CrearVideojuego, CrearCancion, ModificarCancion, ModificarVideojuego, CrearPelicula, ModificarPelicula
 from django.contrib.auth.decorators import login_required
 
 def lobby(request):
     
     return render(request, "foro/lobby.html", {}) 
-
+@login_required
 def peliculas(request):
     
     pelicula_a_buscar = request.GET.get('nombre')
@@ -17,7 +17,7 @@ def peliculas(request):
         listado_de_peliculas = Pelicula.objects.all()
     
     return render(request, "foro/peliculas.html", {"listado_de_peliculas" : listado_de_peliculas}) 
-
+@login_required
 def videojuegos(request):
     
     videojuego_a_buscar = request.GET.get('nombre')
@@ -28,7 +28,7 @@ def videojuegos(request):
         listado_de_videojuegos = Videojuego.objects.all()
     
     return render(request, "foro/videojuegos.html", {"listado_de_videojuegos" : listado_de_videojuegos}) 
-
+@login_required
 def canciones(request):
     
     cancion_a_buscar = request.GET.get('nombre')
@@ -39,7 +39,7 @@ def canciones(request):
         listado_de_canciones = Cancion.objects.all()
     
     return render(request, "foro/canciones.html", {"listado_de_canciones" : listado_de_canciones}) 
-
+@login_required
 def menu_creacion(request):
     
     return render(request, "foro/menu_creacion.html", {})
@@ -48,24 +48,32 @@ def creacion_pelicula(request):
     
     if request.method == "POST":
         
-        pelicula = Pelicula(nombre=request.POST.get('nombre'),
-                            director=request.POST.get('director'),
-                            titulo=request.POST.get('titulo'),
-                            subtitulo=request.POST.get('subtitulo'),
-                            opinion=request.POST.get('opinion'),
-                            puntaje=request.POST.get('puntaje'),
-                            fecha=request.POST.get('fecha'))
-        pelicula.save()
+        formulario = CrearPelicula(request.POST, request.FILES)
+        if formulario.is_valid():
+            info_limpia = formulario.cleaned_data
+            
+            pelicula = Pelicula(nombre=info_limpia.get('nombre'),
+                            director=info_limpia.get('director'),
+                            titulo=info_limpia.get('titulo'),
+                            subtitulo=info_limpia.get('subtitulo'),
+                            opinion=info_limpia.get('opinion'),
+                            puntaje=info_limpia.get('puntaje'),
+                            fecha=info_limpia.get('fecha'),
+                            imagen =info_limpia.get('imagen'))
+            pelicula.save()
+            
+            return redirect('menu_creacion')
+        else:
+            return render(request, "foro/creacion_pelicula.html", {'formulario': formulario})
         
-        return redirect('menu_creacion')
-        
-    return render(request, "foro/creacion_pelicula.html", {})
+    formulario = CrearPelicula()   
+    return render(request, "foro/creacion_pelicula.html", {'formulario': formulario})
 @login_required
 def creacion_videojuego(request):
     
     if request.method == "POST":
         
-        formulario = CrearVideojuego(request.POST)
+        formulario = CrearVideojuego(request.POST, request.FILES)
         if formulario.is_valid():
             info_limpia = formulario.cleaned_data
             
@@ -75,7 +83,8 @@ def creacion_videojuego(request):
                             subtitulo=info_limpia.get('subtitulo'),
                             opinion=info_limpia.get('opinion'),
                             puntaje=info_limpia.get('puntaje'),
-                            fecha=info_limpia.get('fecha'))
+                            fecha=info_limpia.get('fecha'),
+                            imagen =info_limpia.get('imagen'))
             videojuego.save()
             
             return redirect('menu_creacion')
@@ -89,7 +98,7 @@ def creacion_cancion(request):
     
     if request.method == "POST":
         
-        formulario = CrearCancion(request.POST)
+        formulario = CrearCancion(request.POST, request.FILES)
         if formulario.is_valid():
             info_limpia = formulario.cleaned_data
             
@@ -99,7 +108,8 @@ def creacion_cancion(request):
                             subtitulo=info_limpia.get('subtitulo'),
                             opinion=info_limpia.get('opinion'),
                             puntaje=info_limpia.get('puntaje'),
-                            fecha=info_limpia.get('fecha'))
+                            fecha=info_limpia.get('fecha'),
+                            imagen =info_limpia.get('imagen'))
             cancion.save()
             
             return redirect('menu_creacion')
@@ -128,24 +138,32 @@ def modificar_blog_pelicula(request, pelicula_id):
     pelicula_a_actualizar = Pelicula.objects.get(id = pelicula_id)
     
     if request.method == "POST":
-        pelicula_a_actualizar.nombre=request.POST.get('nombre')
-        pelicula_a_actualizar.director=request.POST.get('director')
-        pelicula_a_actualizar.titulo=request.POST.get('titulo')
-        pelicula_a_actualizar.subtitulo=request.POST.get('subtitulo')
-        pelicula_a_actualizar.opinion=request.POST.get('opinion')
-        pelicula_a_actualizar.puntaje=request.POST.get('puntaje')
-
-        pelicula_a_actualizar.save()
-        return redirect('peliculas')
+        formulario = ModificarPelicula(request.POST, request.FILES)
+        if formulario.is_valid():
+            info_nueva = formulario.cleaned_data
+            
+            pelicula_a_actualizar.nombre=info_nueva.get('nombre')
+            pelicula_a_actualizar.director=info_nueva.get('director')
+            pelicula_a_actualizar.titulo=info_nueva.get('titulo')
+            pelicula_a_actualizar.subtitulo=info_nueva.get('subtitulo')
+            pelicula_a_actualizar.opinion=info_nueva.get('opinion')
+            pelicula_a_actualizar.puntaje=info_nueva.get('puntaje')
+            pelicula_a_actualizar.fecha=info_nueva.get('fecha')
+            pelicula_a_actualizar.imagen=info_nueva.get('imagen')
+            
+            pelicula_a_actualizar.save()
+            
+            return redirect('peliculas')
+        return render(request, "foro/modificar_pelicula.html", {"formulario": formulario})
     
-    
-    return render(request, "foro/modificar_pelicula.html", {"pelicula_a_actualizar": pelicula_a_actualizar})
+    formulario = ModificarPelicula(initial={'nombre': pelicula_a_actualizar.nombre,'director': pelicula_a_actualizar.artista,'titulo': pelicula_a_actualizar.titulo,'subtitulo': pelicula_a_actualizar.subtitulo,'opinion': pelicula_a_actualizar.opinion,'puntaje': pelicula_a_actualizar.puntaje,'fecha': pelicula_a_actualizar.fecha,'imagen': pelicula_a_actualizar.imagen})
+    return render(request, "foro/modificar_pelicula.html", {"formulario": formulario})
 @login_required
 def modificar_blog_videojuego(request, videojuego_id):
     videojuego_a_actualizar = Videojuego.objects.get(id = videojuego_id)
     
     if request.method == "POST":
-        formulario = ModificarVideojuego(request.POST)
+        formulario = ModificarVideojuego(request.POST, request.FILES)
         if formulario.is_valid():
             info_nueva = formulario.cleaned_data
             
@@ -155,20 +173,21 @@ def modificar_blog_videojuego(request, videojuego_id):
             videojuego_a_actualizar.subtitulo=info_nueva.get('subtitulo')
             videojuego_a_actualizar.opinion=info_nueva.get('opinion')
             videojuego_a_actualizar.puntaje=info_nueva.get('puntaje')
+            videojuego_a_actualizar.imagen=info_nueva.get('imagen')
             
             videojuego_a_actualizar.save()
             
             return redirect('videojuegos')
         return render(request, "foro/modificar_videojuego.html", {"formulario": formulario})
     
-    formulario = ModificarVideojuego(initial={'nombre':videojuego_a_actualizar.nombre,'desarrollador':videojuego_a_actualizar.desarrollador,'titulo':videojuego_a_actualizar.titulo,'subtitulo':videojuego_a_actualizar.subtitulo,'opinion':videojuego_a_actualizar.opinion,'puntaje':videojuego_a_actualizar.puntaje})
+    formulario = ModificarVideojuego(initial={'nombre':videojuego_a_actualizar.nombre,'desarrollador':videojuego_a_actualizar.desarrollador,'titulo':videojuego_a_actualizar.titulo,'subtitulo':videojuego_a_actualizar.subtitulo,'opinion':videojuego_a_actualizar.opinion,'puntaje':videojuego_a_actualizar.puntaje,'fecha': videojuego_a_actualizar.fecha,'imagen': videojuego_a_actualizar.imagen})
     return render(request, "foro/modificar_videojuego.html", {"formulario": formulario})
 @login_required    
 def modificar_blog_cancion(request, cancion_id):
     cancion_a_actualizar = Cancion.objects.get(id = cancion_id)
     
     if request.method == "POST":
-        formulario = ModificarCancion(request.POST)
+        formulario = ModificarCancion(request.POST, request.FILES)
         if formulario.is_valid():
             info_nueva = formulario.cleaned_data
             
@@ -178,26 +197,32 @@ def modificar_blog_cancion(request, cancion_id):
             cancion_a_actualizar.subtitulo=info_nueva.get('subtitulo')
             cancion_a_actualizar.opinion=info_nueva.get('opinion')
             cancion_a_actualizar.puntaje=info_nueva.get('puntaje')
+            cancion_a_actualizar.fecha=info_nueva.get('fecha')
+            cancion_a_actualizar.imagen=info_nueva.get('imagen')
             
             cancion_a_actualizar.save()
             
             return redirect('canciones')
         return render(request, "foro/modificar_cancion.html", {"formulario": formulario})
     
-    formulario = ModificarCancion(initial={'nombre': cancion_a_actualizar.nombre,'artista': cancion_a_actualizar.artista,'titulo': cancion_a_actualizar.titulo,'subtitulo': cancion_a_actualizar.subtitulo,'opinion': cancion_a_actualizar.opinion,'puntaje': cancion_a_actualizar.puntaje})
+    formulario = ModificarCancion(initial={'nombre': cancion_a_actualizar.nombre,'artista': cancion_a_actualizar.artista,'titulo': cancion_a_actualizar.titulo,'subtitulo': cancion_a_actualizar.subtitulo,'opinion': cancion_a_actualizar.opinion,'puntaje': cancion_a_actualizar.puntaje,'fecha': cancion_a_actualizar.fecha,'imagen': cancion_a_actualizar.imagen})
     return render(request, "foro/modificar_cancion.html", {"formulario": formulario})
-
+@login_required
 def detalle_pelicula(request, pelicula_id):
     pelicula = Pelicula.objects.get(id = pelicula_id)
     
     return render(request, "foro/detalle_pelicula.html", {"pelicula": pelicula})
-    
+@login_required    
 def detalle_videojuego(request, videojuego_id):
     videojuego = Videojuego.objects.get(id = videojuego_id)
     
     return render(request, "foro/detalle_videojuego.html", {"videojuego": videojuego})
-    
+@login_required    
 def detalle_cancion(request, cancion_id):
     cancion = Cancion.objects.get(id = cancion_id)
     
     return render(request, "foro/detalle_cancion.html", {"cancion": cancion})
+
+def about_me(request):
+    
+    return render(request,'foro/aboutme.html',{})

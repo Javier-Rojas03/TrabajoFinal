@@ -7,9 +7,12 @@
 {% block main_menu %}
             
 <div class="text-center my-5">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
-        {{formulario}}
+        {{formulario.media}}
+        <table>   
+            {{formulario}}
+        </table>
         <input type="submit" value="Crear">
     </form>
 </div>
