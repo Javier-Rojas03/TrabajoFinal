@@ -1,9 +1,8 @@
 from django.urls import path
-from foro.views import inicio, lobby, peliculas, videojuegos, canciones, menu_creacion,creacion_pelicula, creacion_videojuego, creacion_cancion, eliminar_blog_pelicula, eliminar_blog_videojuego, eliminar_blog_cancion, modificar_blog_cancion, modificar_blog_pelicula, modificar_blog_videojuego, detalle_cancion, detalle_pelicula, detalle_videojuego
+from foro.views import lobby, peliculas, videojuegos, canciones, menu_creacion,creacion_pelicula, creacion_videojuego, creacion_cancion, eliminar_blog_pelicula, eliminar_blog_videojuego, eliminar_blog_cancion, modificar_blog_cancion, modificar_blog_pelicula, modificar_blog_videojuego, detalle_cancion, detalle_pelicula, detalle_videojuego
 
 
 urlpatterns = [
-    path('', inicio, name='inicio'),
     path('lobby/',  lobby, name='lobby'),
     path('peliculas/',  peliculas, name='peliculas'),
     path('videojuegos/',  videojuegos, name='videojuegos'),

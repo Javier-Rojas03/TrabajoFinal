@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from foro.models import Pelicula, Videojuego, Cancion
 from foro.forms import CrearVideojuego, CrearCancion, ModificarCancion, ModificarVideojuego
-
-def inicio(request):
-    
-    return render(request, "foro/inicio.html", {})
+from django.contrib.auth.decorators import login_required
 
 def lobby(request):
     
@@ -46,7 +43,7 @@ def canciones(request):
 def menu_creacion(request):
     
     return render(request, "foro/menu_creacion.html", {})
-
+@login_required
 def creacion_pelicula(request):
     
     if request.method == "POST":
@@ -63,7 +60,7 @@ def creacion_pelicula(request):
         return redirect('menu_creacion')
         
     return render(request, "foro/creacion_pelicula.html", {})
-
+@login_required
 def creacion_videojuego(request):
     
     if request.method == "POST":
@@ -87,7 +84,7 @@ def creacion_videojuego(request):
         
     formulario = CrearVideojuego()   
     return render(request, "foro/creacion_videojuego.html", {'formulario': formulario})
-
+@login_required
 def creacion_cancion(request):
     
     if request.method == "POST":
@@ -111,22 +108,22 @@ def creacion_cancion(request):
     
     formulario = CrearCancion() 
     return render(request, "foro/creacion_cancion.html", {'formulario': formulario})
-
+@login_required
 def eliminar_blog_pelicula(request, pelicula_id):
     pelicula = Pelicula.objects.get(id=pelicula_id)
     pelicula.delete()
     return redirect(peliculas)
-
+@login_required
 def eliminar_blog_videojuego(request, videojuego_id):
     videojuego = Videojuego.objects.get(id=videojuego_id)
     videojuego.delete()
     return redirect(videojuegos)
-
+@login_required
 def eliminar_blog_cancion(request, cancion_id):
     cancion = Cancion.objects.get(id=cancion_id)
     cancion.delete()
     return redirect(canciones)    
-
+@login_required
 def modificar_blog_pelicula(request, pelicula_id):
     pelicula_a_actualizar = Pelicula.objects.get(id = pelicula_id)
     
@@ -143,7 +140,7 @@ def modificar_blog_pelicula(request, pelicula_id):
     
     
     return render(request, "foro/modificar_pelicula.html", {"pelicula_a_actualizar": pelicula_a_actualizar})
-
+@login_required
 def modificar_blog_videojuego(request, videojuego_id):
     videojuego_a_actualizar = Videojuego.objects.get(id = videojuego_id)
     
@@ -166,7 +163,7 @@ def modificar_blog_videojuego(request, videojuego_id):
     
     formulario = ModificarVideojuego(initial={'nombre':videojuego_a_actualizar.nombre,'desarrollador':videojuego_a_actualizar.desarrollador,'titulo':videojuego_a_actualizar.titulo,'subtitulo':videojuego_a_actualizar.subtitulo,'opinion':videojuego_a_actualizar.opinion,'puntaje':videojuego_a_actualizar.puntaje})
     return render(request, "foro/modificar_videojuego.html", {"formulario": formulario})
-    
+@login_required    
 def modificar_blog_cancion(request, cancion_id):
     cancion_a_actualizar = Cancion.objects.get(id = cancion_id)
     
