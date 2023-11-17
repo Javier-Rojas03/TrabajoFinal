@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
-from foro.models import Pelicula, Videojuego, Cancion
-from foro.forms import CrearVideojuego, CrearCancion, ModificarCancion, ModificarVideojuego, CrearPelicula, ModificarPelicula
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from foro.forms import CrearCancion, ModificarCancion, CrearPelicula, ModificarPelicula
+from foro.models import Pelicula, Videojuego, Cancion
 
 def lobby(request):
     
@@ -68,31 +72,12 @@ def creacion_pelicula(request):
         
     formulario = CrearPelicula()   
     return render(request, "foro/creacion_pelicula.html", {'formulario': formulario})
-@login_required
-def creacion_videojuego(request):
-    
-    if request.method == "POST":
-        
-        formulario = CrearVideojuego(request.POST, request.FILES)
-        if formulario.is_valid():
-            info_limpia = formulario.cleaned_data
-            
-            videojuego = Videojuego(nombre=info_limpia.get('nombre'),
-                            desarrollador=info_limpia.get('desarrollador'),
-                            titulo=info_limpia.get('titulo'),
-                            subtitulo=info_limpia.get('subtitulo'),
-                            opinion=info_limpia.get('opinion'),
-                            puntaje=info_limpia.get('puntaje'),
-                            fecha=info_limpia.get('fecha'),
-                            imagen =info_limpia.get('imagen'))
-            videojuego.save()
-            
-            return redirect('menu_creacion')
-        else:
-            return render(request, "foro/creacion_videojuego.html", {'formulario': formulario})
-        
-    formulario = CrearVideojuego()   
-    return render(request, "foro/creacion_videojuego.html", {'formulario': formulario})
+
+class creacion_videojuego(LoginRequiredMixin, CreateView):
+    model = Videojuego
+    template_name = "foro/creacion_videojuego.html"
+    fields = ['nombre', 'desarrollador', 'titulo', 'subtitulo', 'opinion', 'puntaje', 'fecha', 'imagen']
+    success_url = reverse_lazy('menu_creacion')    
 @login_required
 def creacion_cancion(request):
     
@@ -158,30 +143,12 @@ def modificar_blog_pelicula(request, pelicula_id):
     
     formulario = ModificarPelicula(initial={'nombre': pelicula_a_actualizar.nombre,'director': pelicula_a_actualizar.artista,'titulo': pelicula_a_actualizar.titulo,'subtitulo': pelicula_a_actualizar.subtitulo,'opinion': pelicula_a_actualizar.opinion,'puntaje': pelicula_a_actualizar.puntaje,'fecha': pelicula_a_actualizar.fecha,'imagen': pelicula_a_actualizar.imagen})
     return render(request, "foro/modificar_pelicula.html", {"formulario": formulario})
-@login_required
-def modificar_blog_videojuego(request, videojuego_id):
-    videojuego_a_actualizar = Videojuego.objects.get(id = videojuego_id)
-    
-    if request.method == "POST":
-        formulario = ModificarVideojuego(request.POST, request.FILES)
-        if formulario.is_valid():
-            info_nueva = formulario.cleaned_data
-            
-            videojuego_a_actualizar.nombre=info_nueva.get('nombre')
-            videojuego_a_actualizar.desarrollador=info_nueva.get('desarrollador')
-            videojuego_a_actualizar.titulo=info_nueva.get('titulo')
-            videojuego_a_actualizar.subtitulo=info_nueva.get('subtitulo')
-            videojuego_a_actualizar.opinion=info_nueva.get('opinion')
-            videojuego_a_actualizar.puntaje=info_nueva.get('puntaje')
-            videojuego_a_actualizar.imagen=info_nueva.get('imagen')
-            
-            videojuego_a_actualizar.save()
-            
-            return redirect('videojuegos')
-        return render(request, "foro/modificar_videojuego.html", {"formulario": formulario})
-    
-    formulario = ModificarVideojuego(initial={'nombre':videojuego_a_actualizar.nombre,'desarrollador':videojuego_a_actualizar.desarrollador,'titulo':videojuego_a_actualizar.titulo,'subtitulo':videojuego_a_actualizar.subtitulo,'opinion':videojuego_a_actualizar.opinion,'puntaje':videojuego_a_actualizar.puntaje,'fecha': videojuego_a_actualizar.fecha,'imagen': videojuego_a_actualizar.imagen})
-    return render(request, "foro/modificar_videojuego.html", {"formulario": formulario})
+
+class modificar_blog_videojuego(LoginRequiredMixin, UpdateView):
+    model = Videojuego
+    template_name = "foro/creacion_videojuego.html"
+    fields = ['nombre', 'desarrollador', 'titulo', 'subtitulo', 'opinion', 'puntaje', 'fecha', 'imagen']
+    success_url = reverse_lazy('menu_creacion')   
 @login_required    
 def modificar_blog_cancion(request, cancion_id):
     cancion_a_actualizar = Cancion.objects.get(id = cancion_id)

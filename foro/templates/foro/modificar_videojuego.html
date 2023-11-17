@@ -13,8 +13,8 @@
 <div class="text-center my-5">
     <form action="" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
-        {{formulario.media}}
-        {{formulario}}
+        {{form.media}}
+        {{form}}
         <input type="submit" value="Modificar">
     </form>
 </div>
