@@ -1,7 +1,7 @@
 {% extends "foro/menu_creacion.html" %}
 
 {% block title %}
-    Modificacion
+<title>lModificacion</title>
 {% endblock title %}
 
 {% block text_center %}
@@ -14,7 +14,9 @@
     <form action="" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
         {{formulario.media}}
-        {{formulario}}
+        <table>
+            {{formulario}}
+        </table>
         <input type="submit" value="Modificar">
     </form>
 </div>

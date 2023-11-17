@@ -141,7 +141,7 @@ def modificar_blog_pelicula(request, pelicula_id):
             return redirect('peliculas')
         return render(request, "foro/modificar_pelicula.html", {"formulario": formulario})
     
-    formulario = ModificarPelicula(initial={'nombre': pelicula_a_actualizar.nombre,'director': pelicula_a_actualizar.artista,'titulo': pelicula_a_actualizar.titulo,'subtitulo': pelicula_a_actualizar.subtitulo,'opinion': pelicula_a_actualizar.opinion,'puntaje': pelicula_a_actualizar.puntaje,'fecha': pelicula_a_actualizar.fecha,'imagen': pelicula_a_actualizar.imagen})
+    formulario = ModificarPelicula(initial={'nombre': pelicula_a_actualizar.nombre,'director': pelicula_a_actualizar.director,'titulo': pelicula_a_actualizar.titulo,'subtitulo': pelicula_a_actualizar.subtitulo,'opinion': pelicula_a_actualizar.opinion,'puntaje': pelicula_a_actualizar.puntaje,'fecha': pelicula_a_actualizar.fecha,'imagen': pelicula_a_actualizar.imagen})
     return render(request, "foro/modificar_pelicula.html", {"formulario": formulario})
 
 class modificar_blog_videojuego(LoginRequiredMixin, UpdateView):
